@@ -45,6 +45,7 @@ public class SpawnToe : MonoBehaviour
             Destroy(toeClone);
 
             numberOfToes--;
+            FileMovement.levelPassed = false;
         }
     }
 }

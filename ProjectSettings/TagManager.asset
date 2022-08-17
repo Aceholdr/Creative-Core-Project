@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Toe
   - Nail
+  - NailParticles
   layers:
   - Default
   - TransparentFX

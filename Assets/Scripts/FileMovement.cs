@@ -5,6 +5,9 @@ using UnityEngine;
 public class FileMovement : MonoBehaviour
 {
     public static bool levelPassed;
+    private bool isFiling;
+    GameObject[] particles;
+    ParticleSystem ParticleSystem;
 
     public float leftBound = -10.0f;
     public float rightBound = 10.0f;
@@ -19,18 +22,45 @@ public class FileMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(ActivateParticle());
+    }
 
+    IEnumerator ActivateParticle()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        particles = GameObject.FindGameObjectsWithTag("NailParticles");
+
+        foreach (GameObject particle in particles)
+        {
+            ParticleSystem = particle.GetComponent<ParticleSystem>();
+            ParticleSystem.Stop(false, stopBehavior: ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         MoveCharacter();
 
         if (levelPassed)
         {
+            StartCoroutine(ActivateParticle());
             transform.position = new Vector3(-2.0f, 0.5f, -4.0f);
-            levelPassed = false;
+        }
+
+       if(ParticleSystem != null)
+        {
+            if (isFiling)
+            {
+                ParticleSystem.Play();
+            }
+            else
+            {
+                ParticleSystem.Stop();
+            }
+
+            isFiling = false;
         }
     }
 
@@ -85,6 +115,7 @@ public class FileMovement : MonoBehaviour
         if(other.gameObject.tag == "Nail" && horizontalInput != 0 && forwardInput > 0.5f)
         {
             other.gameObject.transform.localScale -= new Vector3(0.0f, 0.0f, 0.02f);
+            isFiling = true;
 
             if(other.gameObject.transform.localScale.z <= 0.25f)
             {
