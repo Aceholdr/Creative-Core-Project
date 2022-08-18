@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnToe : MonoBehaviour
@@ -14,16 +12,10 @@ public class SpawnToe : MonoBehaviour
 
     Vector3 spawnPos;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (numberOfToes <= 0)
+        if (numberOfToes <= 0)  // If every nail is filed, new toes will spawn.
         {
             nailLength = Random.Range(0.5f, 2.5f);
             float randomX = Random.Range(-6.0f, 5.0f);
@@ -39,7 +31,7 @@ public class SpawnToe : MonoBehaviour
             numberOfToes++;
         }
 
-        if (FileMovement.levelPassed)
+        if (FileMovement.levelPassed)  // Despawns toe if nails are filed completely.
         {
             Destroy(nailClone);
             Destroy(toeClone);
