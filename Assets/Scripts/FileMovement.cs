@@ -6,7 +6,8 @@ public class FileMovement : MonoBehaviour
 {
     public static bool levelPassed;
     private bool isFiling;
-    GameObject[] particles;
+    GameObject[] dustParticles;
+    GameObject[] despawnParticles;
     ParticleSystem ParticleSystem;
     AudioSource audioSource;
     AudioClip currentClip;
@@ -40,9 +41,9 @@ public class FileMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.01f);
 
-        particles = GameObject.FindGameObjectsWithTag("NailParticles");
+        dustParticles = GameObject.FindGameObjectsWithTag("NailParticles");
 
-        foreach (GameObject particle in particles)
+        foreach (GameObject particle in dustParticles)
         {
             ParticleSystem = particle.GetComponent<ParticleSystem>();
             ParticleSystem.Stop(false, stopBehavior: ParticleSystemStopBehavior.StopEmittingAndClear);

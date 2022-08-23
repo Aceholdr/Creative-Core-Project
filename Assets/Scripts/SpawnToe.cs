@@ -6,11 +6,22 @@ public class SpawnToe : MonoBehaviour
     public GameObject nail;
     public GameObject toe;
 
+    [SerializeField] ParticleSystem despawnParticle;
+    [SerializeField] ParticleSystem spawnParticle;
+    [SerializeField] AudioClip despawnSound;
+
+    private AudioSource audioSource;
+
     private int numberOfToes;
     private GameObject nailClone;
     private GameObject toeClone;
 
     Vector3 spawnPos;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -35,6 +46,8 @@ public class SpawnToe : MonoBehaviour
         {
             Destroy(nailClone);
             Destroy(toeClone);
+            Instantiate(despawnParticle, spawnPos, toeClone.transform.rotation);
+            audioSource.PlayOneShot(despawnSound);
 
             numberOfToes--;
             FileMovement.levelPassed = false;
