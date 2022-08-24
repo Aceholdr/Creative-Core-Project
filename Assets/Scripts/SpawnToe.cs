@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+using System.Collections;
 
 public class SpawnToe : MonoBehaviour
 {
@@ -7,14 +9,17 @@ public class SpawnToe : MonoBehaviour
     public GameObject toe;
 
     [SerializeField] ParticleSystem despawnParticle;
-    [SerializeField] ParticleSystem spawnParticle;
     [SerializeField] AudioClip despawnSound;
+
+    [SerializeField] TextMeshProUGUI toeText;
 
     private AudioSource audioSource;
 
     private int numberOfToes;
+    private int totalToes;
     private GameObject nailClone;
     private GameObject toeClone;
+    private ParticleSystem currentParticle;
 
     Vector3 spawnPos;
 
@@ -39,6 +44,7 @@ public class SpawnToe : MonoBehaviour
             nailClone = Instantiate(nail, spawnPos, nail.transform.rotation);
             toeClone = Instantiate(toe, spawnPos, nail.transform.rotation);
 
+            DestroyParticleSystem();
             numberOfToes++;
         }
 
@@ -46,11 +52,19 @@ public class SpawnToe : MonoBehaviour
         {
             Destroy(nailClone);
             Destroy(toeClone);
-            Instantiate(despawnParticle, spawnPos, toeClone.transform.rotation);
+            currentParticle = Instantiate(despawnParticle, spawnPos, toeClone.transform.rotation);
             audioSource.PlayOneShot(despawnSound);
 
             numberOfToes--;
+            totalToes++;
+            toeText.text = "Happy Toes: " + totalToes;
             FileMovement.levelPassed = false;
         }
+    }
+
+    IEnumerator DestroyParticleSystem()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(currentParticle);
     }
 }
