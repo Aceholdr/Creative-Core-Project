@@ -15,11 +15,11 @@ public class SpawnToe : MonoBehaviour
 
     private AudioSource audioSource;
 
-    private int numberOfToes;
-    private int totalToes;
-    private GameObject nailClone;
-    private GameObject toeClone;
-    private ParticleSystem currentParticle;
+    int numberOfToes;
+    int totalToes;
+    GameObject nailClone;
+    GameObject toeClone;
+    ParticleSystem currentParticle;
 
     Vector3 spawnPos;
 
@@ -44,7 +44,6 @@ public class SpawnToe : MonoBehaviour
             nailClone = Instantiate(nail, spawnPos, nail.transform.rotation);
             toeClone = Instantiate(toe, spawnPos, nail.transform.rotation);
 
-            DestroyParticleSystem();
             numberOfToes++;
         }
 
@@ -52,6 +51,12 @@ public class SpawnToe : MonoBehaviour
         {
             Destroy(nailClone);
             Destroy(toeClone);
+
+            if (currentParticle != null)  // Only one despawnParticle exists at the same time.
+            {
+                Destroy(currentParticle.gameObject);
+            }
+
             currentParticle = Instantiate(despawnParticle, spawnPos, toeClone.transform.rotation);
             audioSource.PlayOneShot(despawnSound);
 
@@ -60,11 +65,5 @@ public class SpawnToe : MonoBehaviour
             toeText.text = "Happy Toes: " + totalToes;
             FileMovement.levelPassed = false;
         }
-    }
-
-    IEnumerator DestroyParticleSystem()
-    {
-        yield return new WaitForSeconds(1);
-        Destroy(currentParticle);
     }
 }

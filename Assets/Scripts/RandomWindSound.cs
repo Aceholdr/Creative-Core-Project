@@ -22,12 +22,10 @@ public class RandomWindSound : MonoBehaviour
         StartCoroutine(PlaySoundAfter());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Picks a random wind clip after the previous one ends.
+    /// </summary>
+    /// <returns>Waits clip length</returns>
     IEnumerator PlaySoundAfter()
     {
         int clipNum = Random.Range(1, 5);

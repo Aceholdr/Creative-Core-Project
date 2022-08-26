@@ -5,26 +5,25 @@ using UnityEngine;
 public class FileMovement : MonoBehaviour
 {
     public static bool levelPassed;
-    private bool isFiling;
+    bool isFiling;
     GameObject[] dustParticles;
-    GameObject[] despawnParticles;
     ParticleSystem ParticleSystem;
     AudioSource audioSource;
     AudioClip currentClip;
 
     // Number of bounds only placeholders.
-    public float leftBound = -10.0f;
-    public float rightBound = 10.0f;
-    public float bottomBound = -10.0f;
-    public float upperBound = 10.0f;
+    [SerializeField] float leftBound = -10.0f;
+    [SerializeField] float rightBound = 10.0f;
+    [SerializeField] float bottomBound = -10.0f;
+    [SerializeField] float upperBound = 10.0f;
 
     private float boundBuffer = 0.00001f;
 
-    [SerializeField] private float horizontalInput;
-    [SerializeField] private float forwardInput;
-    [SerializeField] private float speed;
-    [SerializeField] private AudioClip fileSoundLeft;
-    [SerializeField] private AudioClip fileSoundRight;
+    [SerializeField] float horizontalInput;
+    [SerializeField] float forwardInput;
+    [SerializeField] float speed;
+    [SerializeField] AudioClip fileSoundLeft;
+    [SerializeField] AudioClip fileSoundRight;
 
     // Start is called before the first frame update
     void Start()
